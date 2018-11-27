@@ -9,8 +9,4 @@ public class Configuration {
     public Interpreter createInterpreter(String data){
         return new Interpreter(data);
     }
-
-    /*public CommandResolver createCommandResolver(){
-        return new CommandResolver(customerDB, O);
-    }*/
 }

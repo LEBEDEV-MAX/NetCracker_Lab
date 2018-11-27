@@ -1,7 +1,6 @@
 package Controller.CustomerActions;
 
 import Controller.Command;
-import Model.Customer;
 import Model.CustomerDB;
 
 import java.util.Map;
@@ -19,6 +18,6 @@ public class GetAllCustomers implements Command {
     }
 
     public CustomerDB getDb(){
-        return db;
+            return db;
     }
 }

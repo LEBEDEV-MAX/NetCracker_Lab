@@ -29,7 +29,7 @@ public class Interpreter {
                 if(p.contains(pName)){
                     int paramIndex = p.indexOf(pName) + pName.length(); //индекс начала параметра
                     String param = p.substring(paramIndex, p.length());
-                    param = param.replaceAll("\\s","");
+                    //param = param.replaceAll("\\s","");
                     map.put(pName, param);
                 }
             }

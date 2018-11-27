@@ -21,11 +21,25 @@ public class CustomerDB {
         customers.add(customer);
     }
 
-    public Customer getCustomer(int index){
-        return customers.get(index);
+    public Customer getCustomer(int id){
+        for (Customer customer : customers){
+            if(customer.getId() == id) return customer;
+        }
+        // сообщение о ненайденом клиенте
+        return null;
     }
 
-    public void deleteCustomer(int index){
-        customers.remove(index);
+    public void deleteCustomer(int id){
+        for(int i=0; i < customers.size(); i++){
+            if(customers.get(i).getId() == id) {
+                customers.remove(i);
+                return;
+            }
+        }
+        //сообщение о ненайденом клиенте
+    }
+
+    public void deleteAllCustomers(){
+        customers = null;
     }
 }

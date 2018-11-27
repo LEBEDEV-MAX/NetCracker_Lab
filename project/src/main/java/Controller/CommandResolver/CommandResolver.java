@@ -1,8 +1,7 @@
 package Controller.CommandResolver;
 
 import Controller.CommandFactory.CommandFactory;
-import Controller.CommandFactory.CreateCustomerFactory;
-import Controller.CommandFactory.GetAllCustomersFactory;
+import Controller.CommandFactory.CustomerFactories.*;
 import Model.CustomerDB;
 import Model.OrderDB;
 
@@ -19,7 +18,11 @@ public class CommandResolver implements CommandFactoryResolver {
         this.orderDB = orderDB;
         map = new HashMap<String, CommandFactory>();
         map.put("CreateCustomer", new CreateCustomerFactory(customerDB));
+        map.put("DeleteAllCustomers", new DeleteAllCustomerFactory(customerDB));
+        map.put("DeleteCustomer", new DeleteCustomerFactory(customerDB));
         map.put("GetAllCustomers", new GetAllCustomersFactory(customerDB));
+        map.put("GetCustomer", new GetCustomerFactory(customerDB));
+        map.put("UpdateCustomer", new UpdateCustomerFactory(customerDB));
         /**/
     }
 
