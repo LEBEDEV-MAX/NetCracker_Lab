@@ -1,31 +1,27 @@
 package Controller;
 
-import Controller.CommandFactory.*;
-import Controller.CommandResolver.CommandResolver;
-import Model.CustomerDB;
-import Model.OrderDB;
-
-import java.util.Map;
+import Controller.CommandFactory.CommandFactory;
+import Controller.CommandResolver.CommandFactoryResolver;
+import Controller.Interpreter.Interpreter;
 
 public class TerminalController{
-    private String data;
-    private Map<String, String> map;
-    private CustomerDB customerDB;
-    private OrderDB orderDB;
+    private CommandFactoryResolver cfr;
+    private Interpreter interpreter;
 
-    public TerminalController(String data){
-        this.data = data;
-        orderDB = new OrderDB();
-        customerDB = new CustomerDB();
+    public TerminalController(CommandFactoryResolver cfr, Interpreter interpreter){
+        this.cfr = cfr;
+        this.interpreter = interpreter;
     }
 
-    public void method(){
-        Interpreter interpreter = new Interpreter(data);
-        String commandName = interpreter.getCommandName();
-        CommandResolver resolver = new CommandResolver(customerDB, orderDB);
-        CommandFactory cf = resolver.resolveCommandFactory(commandName);
-        Command cmd = cf.createCommand();
-        map = interpreter.interpretArguments();
-        cmd.execute(map);
+    public void method(String data){
+        String commandName = interpreter.getCommandName(data);
+        try{
+            CommandFactory cf = cfr.resolveCommandFactory(commandName);
+            Command cmd = cf.createCommand();
+            cmd.execute(interpreter.interpretArguments(data));
+        }
+        catch (NullPointerException e){
+            System.out.println("Неверная команда");
+        }
     }
 }

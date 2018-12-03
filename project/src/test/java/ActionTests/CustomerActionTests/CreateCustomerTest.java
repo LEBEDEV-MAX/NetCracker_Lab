@@ -18,10 +18,10 @@ public class CreateCustomerTest {
     public void beforeTest(){
         db = new CustomerDB();
         map = new HashMap<>();
-        map.put("id=", "1");
-        map.put("name=", "Ivan");
-        map.put("phone=", "+12345678901");
-        map.put("address=", "Russia");
+        map.put("id", "1");
+        map.put("name", "Ivan");
+        map.put("phone", "+12345678901");
+        map.put("address", "Russia");
     }
 
     @Test

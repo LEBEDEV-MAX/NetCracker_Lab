@@ -2,6 +2,7 @@ package Controller.CustomerActions;
 
 import Controller.Command;
 import Model.CustomerDB;
+import View.PrintComplete;
 
 import java.util.Map;
 
@@ -15,5 +16,7 @@ public class DeleteAllCustomers implements Command {
     @Override
     public void execute(Map<String, String> map){
         db.deleteAllCustomers();
+        PrintComplete printer = new PrintComplete();
+        printer.printComplete();
     }
 }

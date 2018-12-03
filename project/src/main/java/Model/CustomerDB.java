@@ -40,6 +40,8 @@ public class CustomerDB {
     }
 
     public void deleteAllCustomers(){
-        customers = null;
+        for(Customer customer: customers){
+            customer = null;
+        }
     }
 }
