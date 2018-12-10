@@ -1,8 +1,8 @@
 package Model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Customer {
+public class Customer implements Serializable{
     private int id;
     private String name;
     private String phone;

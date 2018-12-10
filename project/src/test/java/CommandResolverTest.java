@@ -2,11 +2,11 @@ import Controller.CommandFactory.CommandFactory;
 import Controller.CommandFactory.CustomerFactories.*;
 import Controller.CommandFactory.OrderFactories.*;
 import Controller.CommandResolver.CommandResolver;
-import Controller.OrderActions.GetAllOrders;
-import Controller.OrderActions.GetOrder;
-import Controller.OrderActions.UpdateOrder;
+import Controller.Exceptions.WrongCommandException;
 import Model.CustomerDB;
 import Model.OrderDB;
+import View.PrintAllCustomers;
+import View.PrintCustomer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,67 +15,155 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandResolverTest {
-    private CommandResolver cr;
+    private PrintCustomer pc;
+    private PrintAllCustomers pac;
+    private Map<String, CommandFactory> map;
 
     @Before
     public void beforeTest(){
-        Map<String, CommandFactory> map = new HashMap<>();
+        map = new HashMap<>();
         CustomerDB customerDB = new CustomerDB();
-        OrderDB orderDB = new OrderDB();
+       ////// OrderDB orderDB = new OrderDB();
+        pc = new PrintCustomer();
+        pac = new PrintAllCustomers();
 
         map.put("CreateCustomer", new CreateCustomerFactory(customerDB));
         map.put("DeleteAllCustomers", new DeleteAllCustomerFactory(customerDB));
         map.put("DeleteCustomer", new DeleteCustomerFactory(customerDB));
-        map.put("GetAllCustomers", new GetAllCustomersFactory(customerDB));
-        map.put("GetCustomer", new GetCustomerFactory(customerDB));
+        map.put("GetAllCustomers", new GetAllCustomersFactory(customerDB, pac));
+        map.put("GetCustomer", new GetCustomerFactory(customerDB, pc));
         map.put("UpdateCustomer", new UpdateCustomerFactory(customerDB));
+        map.put("SaveCustomers", new SaveCustomersFactory(customerDB));
+        map.put("LoadCustomers", new LoadCustomersFactory(customerDB));
         //
-        map.put("CreateOrder", new CreateOrderFactory(orderDB));
+      /*  map.put("CreateOrder", new CreateOrderFactory(orderDB));
         map.put("DeleteAllOrders", new DeleteAllOrdersFactory(orderDB));
         map.put("DeleteOrder", new DeleteOrderFactory(orderDB));
         map.put("GetAllOrders", new GetAllOrdersFactory(orderDB));
         map.put("GetOrder", new GetOrderFactory(orderDB));
         map.put("UpdateOrder", new UpdateOrderFactory(orderDB));
-
-        cr = new CommandResolver(map);
+*/
     }
 
     @Test
     public void testCreateCustomer(){
         String str = "CreateCustomer";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof CreateCustomerFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof CreateCustomerFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testDeleteAllCustomers(){
         String str = "DeleteAllCustomers";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof DeleteAllCustomerFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof DeleteAllCustomerFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Test
     public void testDeleteCustomer(){
         String str = "DeleteCustomer";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof DeleteCustomerFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof DeleteCustomerFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testGetAllCustomers(){
         String str = "GetAllCustomers";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetAllCustomersFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetAllCustomersFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Test
     public void testGetCustomer(){
         String str = "GetCustomer";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetCustomerFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetCustomerFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testUpdateCustomer(){
         String str = "UpdateCustomer";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof UpdateCustomerFactory);
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof UpdateCustomerFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
+    @Test
+    public void testSaveCustomers(){
+        String str = "SaveCustomers";
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof SaveCustomersFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testLoadCustomers(){
+        String str = "LoadCustomers";
+        try{
+            CommandResolver cr = new CommandResolver(map);
+
+            Assert.assertTrue(cr.resolveCommandFactory(str) instanceof LoadCustomersFactory);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWrongCommandException(){
+        String str = "a";
+        try{
+            CommandResolver cr = new CommandResolver(map);
+            cr.resolveCommandFactory(str);
+        }
+        catch (WrongCommandException e){
+            Assert.assertEquals("Wrong Command", e.getMessage());
+        }
+    }
+
+/*
     @Test
     public void testCreateOrder(){
         String str = "CreateOrder";
@@ -97,18 +185,19 @@ public class CommandResolverTest {
     @Test
     public void testGetAllOrders(){
         String str = "GetAllOrders";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetAllOrders);
+        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetAllOrdersFactory);
     }
 
     @Test
     public void testGetOrder(){
         String str = "GetOrder";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetOrder);
+        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof GetOrderFactory);
     }
 
     @Test
     public void testUpdateOrder(){
         String str = "UpdateOrder";
-        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof UpdateOrder);
+        Assert.assertTrue(cr.resolveCommandFactory(str) instanceof UpdateOrderFactory);
     }
+    */
 }

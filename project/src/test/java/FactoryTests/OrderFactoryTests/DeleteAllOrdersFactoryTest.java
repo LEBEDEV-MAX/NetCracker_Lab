@@ -1,8 +1,8 @@
 package FactoryTests.OrderFactoryTests;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.OrderFactories.DeleteAllOrdersFactory;
-import Controller.OrderActions.DeleteAllOrders;
+import Controller.Actions.OrderActions.DeleteAllOrders;
 import Model.OrderDB;
 import org.junit.Assert;
 import org.junit.Before;

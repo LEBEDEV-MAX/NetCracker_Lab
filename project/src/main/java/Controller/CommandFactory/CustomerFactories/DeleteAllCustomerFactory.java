@@ -1,8 +1,8 @@
 package Controller.CommandFactory.CustomerFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.CustomerActions.DeleteCustomer;
+import Controller.Actions.CustomerActions.DeleteAllCustomers;
 import Model.CustomerDB;
 
 public class DeleteAllCustomerFactory implements CommandFactory {
@@ -14,7 +14,7 @@ public class DeleteAllCustomerFactory implements CommandFactory {
 
     @Override
     public Command createCommand(){
-        return new DeleteCustomer(db);
+        return new DeleteAllCustomers(db);
     }
 
     public CustomerDB getDb() {

@@ -1,8 +1,8 @@
 package Controller.CommandFactory.OrderFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.OrderActions.GetAllOrders;
+import Controller.Actions.OrderActions.GetAllOrders;
 import Model.OrderDB;
 
 public class GetAllOrdersFactory implements CommandFactory {

@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Exceptions.CustomerNotFoundException;
+
 import java.util.ArrayList;
 
 public class CustomerDB {
@@ -23,25 +25,25 @@ public class CustomerDB {
 
     public Customer getCustomer(int id){
         for (Customer customer : customers){
-            if(customer.getId() == id) return customer;
+            if(customer.getId() == id) {
+                return customer;
+            }
         }
-        // сообщение о ненайденом клиенте
         return null;
     }
 
-    public void deleteCustomer(int id){
-        for(int i=0; i < customers.size(); i++){
+    public void deleteCustomer(int id) throws CustomerNotFoundException{
+        for(int i = 0; i < customers.size(); i++){
             if(customers.get(i).getId() == id) {
                 customers.remove(i);
                 return;
             }
         }
-        //сообщение о ненайденом клиенте
+        //if customer not found:
+        throw new CustomerNotFoundException();
     }
 
     public void deleteAllCustomers(){
-        for(Customer customer: customers){
-            customer = null;
-        }
+       customers.clear();
     }
 }

@@ -15,25 +15,18 @@ public class InterpreterImpl implements Interpreter {
         Map<String, String> map = new HashMap<String,String>();
 
         data = replace(data);
-        String[] arguments = data.split(";");
-        for (String arg : arguments){
-            String[] a = arg.split("=");
-            try {
+        if(data.contains("=")) {
+            String[] arguments = data.split(";");
+            for (String arg : arguments) {
+                String[] a = arg.split("=");
                 map.put(a[0].trim(), a[1].trim());
             }
-            catch (ArrayIndexOutOfBoundsException e){
-                printException(e);
-            }
         }
-        return  map;
+        return map;
     }
 
     private String replace(String data){
         String commandName = getCommandName(data);
         return data.replaceAll(commandName, "");
-    }
-
-    private void printException(Exception e){
-        //ArrayIndexOutOfBoundsException
     }
 }

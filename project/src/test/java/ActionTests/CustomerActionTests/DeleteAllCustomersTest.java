@@ -1,6 +1,6 @@
 package ActionTests.CustomerActionTests;
 
-import Controller.CustomerActions.DeleteAllCustomers;
+import Controller.Actions.CustomerActions.DeleteAllCustomers;
 import Model.Customer;
 import Model.CustomerDB;
 import org.junit.Assert;
@@ -28,6 +28,6 @@ public class DeleteAllCustomersTest {
         DeleteAllCustomers dc = new DeleteAllCustomers(db);
         dc.execute(map);
 
-        Assert.assertTrue(db.getCustomers() == null);
+        Assert.assertEquals(0, db.getCustomers().size());
     }
 }

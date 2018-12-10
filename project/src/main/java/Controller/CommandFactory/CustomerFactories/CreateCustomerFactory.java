@@ -1,8 +1,8 @@
 package Controller.CommandFactory.CustomerFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.CustomerActions.CreateCustomer;
+import Controller.Actions.CustomerActions.CreateCustomer;
 import Model.CustomerDB;
 
 

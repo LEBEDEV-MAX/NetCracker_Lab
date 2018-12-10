@@ -1,6 +1,8 @@
 package Controller.CommandResolver;
 
 import Controller.CommandFactory.CommandFactory;
+import Controller.Exceptions.WrongCommandException;
+
 import java.util.Map;
 
 public class CommandResolver implements CommandFactoryResolver {
@@ -11,7 +13,10 @@ public class CommandResolver implements CommandFactoryResolver {
     }
 
     @Override
-    public CommandFactory resolveCommandFactory(String commandName){
-        return map.get(commandName);
+    public CommandFactory resolveCommandFactory(String commandName) throws WrongCommandException{
+        if (map.get(commandName) != null)
+            return map.get(commandName);
+        else
+            throw new WrongCommandException();
     }
 }

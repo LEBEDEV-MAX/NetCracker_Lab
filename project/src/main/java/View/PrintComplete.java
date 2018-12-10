@@ -2,7 +2,7 @@ package View;
 
 public class PrintComplete {
 
-    public void printComplete(){
+    public void print(){
         System.out.println("Command complete");
     }
 }

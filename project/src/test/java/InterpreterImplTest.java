@@ -14,7 +14,7 @@ public class InterpreterImplTest {
 
     @Before
     public void beforeTest(){
-        data = "CreateCustomer id=1; name=Ivan; phone=+12345678901; address=Russia";
+        data = "CreateCustomer id=1; name=Ivan; phone=+12345678901; address=Russia;";
         commandName = "CreateCustomer";
         map = new HashMap<>();
         map.put("id", "1");

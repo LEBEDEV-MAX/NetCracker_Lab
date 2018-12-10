@@ -1,26 +1,29 @@
 package FactoryTests.CustomerFactoryTest;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CustomerFactories.GetCustomerFactory;
-import Controller.CustomerActions.GetCustomer;
+import Controller.Actions.CustomerActions.GetCustomer;
 import Model.CustomerDB;
+import View.PrintCustomer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class GetGuctomerFactoryTest {
     private CustomerDB db;
-    private GetCustomerFactory factory;
+    private PrintCustomer pc;
 
     @Before
     public void beforeTest(){
         db = new CustomerDB();
-        factory = new GetCustomerFactory(db);
+        pc = new PrintCustomer();
     }
 
     @Test
     public void test(){
+        GetCustomerFactory factory = new GetCustomerFactory(db, pc);
         Command cmd = factory.createCommand();
+
         Assert.assertEquals(db, factory.getDb());
         Assert.assertTrue(cmd instanceof GetCustomer);
     }

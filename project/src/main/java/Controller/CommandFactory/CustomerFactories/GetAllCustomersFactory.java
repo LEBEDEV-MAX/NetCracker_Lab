@@ -1,21 +1,24 @@
 package Controller.CommandFactory.CustomerFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.CustomerActions.GetAllCustomers;
+import Controller.Actions.CustomerActions.GetAllCustomers;
 import Model.CustomerDB;
+import View.PrintAllCustomers;
 
 
 public class GetAllCustomersFactory implements CommandFactory {
     private CustomerDB db;
+    private PrintAllCustomers pac;
 
-    public GetAllCustomersFactory(CustomerDB db){
+    public GetAllCustomersFactory(CustomerDB db, PrintAllCustomers pac){
         this.db = db;
+        this.pac = pac;
     }
 
     @Override
     public Command createCommand(){
-        return new GetAllCustomers(db);
+        return new GetAllCustomers(db, pac);
     }
 
     public CustomerDB getDb() {

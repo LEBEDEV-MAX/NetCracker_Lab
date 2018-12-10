@@ -1,6 +1,9 @@
 package ActionTests.CustomerActionTests;
 
-import Controller.CustomerActions.DeleteCustomer;
+import Controller.Actions.CustomerActions.DeleteCustomer;
+import Controller.Exceptions.CustomerNotFoundException;
+import Controller.Exceptions.WrongArgumentException;
+import Controller.Exceptions.WrongParameterException;
 import Model.Customer;
 import Model.CustomerDB;
 import org.junit.Assert;
@@ -17,18 +20,76 @@ public class DeleteCustomerTest {
 
     @Before
     public void beforeTest(){
-        db = new CustomerDB();
         customer = new Customer(1, "Igor", "+09876543210", "USA");
+
+        db = new CustomerDB();
         db.addCustomer(customer);
-        map = new HashMap<>();
-        map.put("id=", "1");
     }
 
     @Test
-    public void test(){
-        DeleteCustomer dc = new DeleteCustomer(db);
-        dc.execute(map);
+    public void testExecute(){
+        map = new HashMap<>();
+        map.put("id", "1");
 
-        Assert.assertEquals(0, db.getCustomers().size());
+        try{
+            DeleteCustomer dc = new DeleteCustomer(db);
+            dc.execute(map);
+
+            Assert.assertEquals(0, db.getCustomers().size());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWrongArgumentException(){
+        map = new HashMap<>();
+        map.put("id", "a");
+
+        try{
+            DeleteCustomer dc = new DeleteCustomer(db);
+            dc.execute(map);
+        }
+        catch (WrongArgumentException e){
+            Assert.assertEquals("Wrong Argument", e.getMessage());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWrongParameterException(){
+        map = new HashMap<>();
+        map.put("i d", "1");
+
+        try{
+            DeleteCustomer dc = new DeleteCustomer(db);
+            dc.execute(map);
+        }
+        catch (WrongParameterException e){
+            Assert.assertEquals("Wrong Parameter", e.getMessage());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testCustomerNotFoundException(){
+        map = new HashMap<>();
+        map.put("id", "2");
+
+        try{
+            DeleteCustomer dc = new DeleteCustomer(db);
+            dc.execute(map);
+        }
+        catch (CustomerNotFoundException e){
+            Assert.assertEquals("Customer not found", e.getMessage());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

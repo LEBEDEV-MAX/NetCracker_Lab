@@ -1,8 +1,8 @@
 package Controller.CommandFactory.OrderFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.OrderActions.DeleteOrder;
+import Controller.Actions.OrderActions.DeleteOrder;
 import Model.OrderDB;
 
 public class DeleteOrderFactory implements CommandFactory {

@@ -1,8 +1,6 @@
 package Controller.CommandFactory;
 
-import Controller.Command;
-
-import java.util.Map;
+import Controller.Actions.Command;
 
 public interface CommandFactory {
 

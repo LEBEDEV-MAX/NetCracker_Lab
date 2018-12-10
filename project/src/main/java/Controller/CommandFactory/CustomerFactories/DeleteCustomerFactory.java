@@ -1,8 +1,8 @@
 package Controller.CommandFactory.CustomerFactories;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.CommandFactory;
-import Controller.CustomerActions.DeleteCustomer;
+import Controller.Actions.CustomerActions.DeleteCustomer;
 import Model.CustomerDB;
 
 public class DeleteCustomerFactory implements CommandFactory {

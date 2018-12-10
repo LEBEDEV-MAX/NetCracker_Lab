@@ -1,8 +1,8 @@
 package FactoryTests.OrderFactoryTests;
 
-import Controller.Command;
+import Controller.Actions.Command;
 import Controller.CommandFactory.OrderFactories.CreateOrderFactory;
-import Controller.OrderActions.CreateOrder;
+import Controller.Actions.OrderActions.CreateOrder;
 import Model.OrderDB;
 import org.junit.Assert;
 import org.junit.Before;
