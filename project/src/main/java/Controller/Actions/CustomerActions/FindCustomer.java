@@ -5,13 +5,27 @@ import Controller.Exceptions.WrongArgumentException;
 import Controller.Exceptions.WrongParameterException;
 import Model.Customer;
 import Model.CustomerDB;
-import View.PrintFoundCustomer;
+import View.CustomersView.PrintFoundCustomer;
 
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * This class find customer by his name and operation
+ * operation - search principle; contains arguments: equals | contains | startWith; like
+ * equals - will find customer by full name match
+ * contains - will find customer if his name contains 'name' argument
+ * startWith - will find customer if his name start with 'name' argument
+ * like - will find customer if it matches the pattern (pattern = 'name' argument)
+ */
 public class FindCustomer implements Command {
+    /**
+     * @see Model.CustomerDB
+     */
     private CustomerDB db;
+    /**
+     * @see View.CustomersView.PrintFoundCustomer
+     */
     private PrintFoundCustomer pfc;
 
     public FindCustomer(CustomerDB db, PrintFoundCustomer pfc){
@@ -19,6 +33,14 @@ public class FindCustomer implements Command {
         this.pfc = pfc;
     }
 
+    /**
+     * @see Controller.Actions.Command
+     * @param map contains (parameter -> argument)
+     * @throws WrongArgumentException when user wrote wrong id argument
+     * @see Controller.Exceptions.WrongArgumentException
+     * @throws WrongParameterException when user wrote wrong id parameter
+     * @see Controller.Exceptions.WrongParameterException
+     */
     @Override
     public void execute(Map<String, String> map) throws WrongParameterException, WrongArgumentException{
         try{
@@ -28,79 +50,55 @@ public class FindCustomer implements Command {
 
             switch (operation){
                 case "equals":
-                    findByEquals(name, customers);
+                    db.findByEquals(name, customers);
                     break;
                 case "contains":
-                    findByContains(name, customers);
+                    db.findByContains(name, customers);
                     break;
                 case "startWith":
-                    findByStartWith(name, customers);
+                    db.findByStartWith(name, customers);
                     break;
                 case "like":
-                    findByLike(name, customers);
+                    db.findByLike(name, customers);
                     break;
                  default:
-                     throw new WrongArgumentException();
+                     throw new WrongArgumentException("operation = " + operation + " in FindCustomer command");
             }
 
-            pfc.print(customers);
+            pfc.print(customers, name);
         }
         catch (Exception e){
             throw e;
         }
     }
 
-    private void findByEquals(String name, ArrayList<Customer> customers){
-        ArrayList<Customer> cust = db.getCustomers();
-        for (Customer c : cust){
-            if(c.getName().equals(name))
-                customers.add(c);
-        }
-    }
-
-    private void findByContains(String name, ArrayList<Customer> customers){
-        ArrayList<Customer> cust = db.getCustomers();
-        for(Customer c: cust){
-            if(c.getName().contains(name))
-                customers.add(c);
-        }
-    }
-
-    private void findByStartWith(String name, ArrayList<Customer> customers){
-        ArrayList<Customer> cust = db.getCustomers();
-        for(Customer c: cust){
-            if(c.getName().startsWith(name))
-                customers.add(c);
-        }
-    }
-
-    private void findByLike(String name, ArrayList<Customer> customers){
-        ArrayList<Customer> cust = db.getCustomers();
-        //создаем регулярку, заменим все ? на . (ед.символ), и все * на .* (много символов)
-        name = name.replaceAll("\\?", ".");
-        name = name.replaceAll("\\*",".*");
-
-        for(Customer c: cust){
-            if(c.getName().matches(name))
-                customers.add(c);
-        }
-    }
-
+    /**
+     * This method returns operation argument
+     * @param map contains (parameter -> argument)
+     * @return operation argument
+     * @throws WrongParameterException when user wrote wrong operation parameter
+     * @see Controller.Exceptions.WrongParameterException
+     */
     private String getOperation(Map<String, String> map) throws WrongParameterException{
-        if(map.get("operation") != null){
-            return map.get("operation");
+        String operation = map.get("operation");
+        if(operation != null){
+            return operation;
         }
-        else throw new WrongParameterException();
+        else throw new WrongParameterException("parameter 'operation' not found in FindCustomer command");
     }
 
+    /**
+     * This method returns name of customer who you want to find
+     * @param map contains (parameter -> argument)
+     * @return name of customer
+     * @throws WrongParameterException when user wrote wrong operation parameter
+     * @see Controller.Exceptions.WrongParameterException
+     */
     private String getName(Map<String, String> map) throws WrongParameterException{
-        if(map.get("name") != null){
-            return map.get("name");
+        String name = map.get("name");
+        if(name != null){
+            return name;
         }
-        else throw new WrongParameterException();
-    }
-
-    public CustomerDB getDb() {
-        return db;
+        else throw new WrongParameterException("parameter 'name' not found in FindCustomer command");
     }
 }

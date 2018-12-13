@@ -4,8 +4,11 @@ import Controller.Actions.Command;
 import Controller.Actions.CustomerActions.FindCustomer;
 import Controller.CommandFactory.CommandFactory;
 import Model.CustomerDB;
-import View.PrintFoundCustomer;
+import View.CustomersView.PrintFoundCustomer;
 
+/**
+ * This class create new FindCustomer command
+ */
 public class FindCustomerFactory implements CommandFactory{
     private CustomerDB db;
     private PrintFoundCustomer pfc;
@@ -15,6 +18,11 @@ public class FindCustomerFactory implements CommandFactory{
         this.pfc = pfc;
     }
 
+    /**
+     * @see Controller.CommandFactory.CommandFactory
+     * @return Command
+     * @see Controller.Actions.CustomerActions.FindCustomer
+     */
     @Override
     public Command createCommand(){
         return new FindCustomer(db, pfc);

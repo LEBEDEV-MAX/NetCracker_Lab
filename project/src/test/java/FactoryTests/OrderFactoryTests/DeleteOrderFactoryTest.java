@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DeleteOrderFactoryTest {
-    private OrderDB db;
+  /*  private OrderDB db;
     private DeleteOrderFactory factory;
 
     @Before
@@ -23,5 +23,5 @@ public class DeleteOrderFactoryTest {
         Command cmd = factory.createCommand();
         Assert.assertEquals(db, factory.getDb());
         Assert.assertTrue(cmd instanceof DeleteOrder);
-    }
+    }*/
 }

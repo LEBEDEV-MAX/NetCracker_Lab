@@ -1,8 +1,11 @@
 package Controller.Exceptions;
 
+/**
+ * This exception thrown away when user wrote invalid parameter
+ */
 public class WrongParameterException extends Exception {
 
-    public WrongParameterException(){
-        super("Wrong Parameter");
+    public WrongParameterException(String str){
+        super("Wrong Parameter: " + str);
     }
 }

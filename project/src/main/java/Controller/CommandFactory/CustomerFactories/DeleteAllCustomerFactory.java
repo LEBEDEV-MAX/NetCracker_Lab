@@ -5,6 +5,9 @@ import Controller.CommandFactory.CommandFactory;
 import Controller.Actions.CustomerActions.DeleteAllCustomers;
 import Model.CustomerDB;
 
+/**
+ * This class create new DeleteAllCustomers command
+ */
 public class DeleteAllCustomerFactory implements CommandFactory {
     private CustomerDB db;
 
@@ -12,6 +15,11 @@ public class DeleteAllCustomerFactory implements CommandFactory {
         this.db = db;
     }
 
+    /**
+     * @see Controller.CommandFactory.CommandFactory
+     * @return Command
+     * @see Controller.Actions.CustomerActions.DeleteAllCustomers
+     */
     @Override
     public Command createCommand(){
         return new DeleteAllCustomers(db);

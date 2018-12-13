@@ -4,7 +4,7 @@ import Controller.Actions.Command;
 import Controller.Actions.CustomerActions.FindCustomer;
 import Controller.CommandFactory.CustomerFactories.FindCustomerFactory;
 import Model.CustomerDB;
-import View.PrintFoundCustomer;
+import View.CustomersView.PrintFoundCustomer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

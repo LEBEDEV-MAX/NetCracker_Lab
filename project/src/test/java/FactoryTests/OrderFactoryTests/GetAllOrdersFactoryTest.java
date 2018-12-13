@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GetAllOrdersFactoryTest {
-    private OrderDB db;
+    /*private OrderDB db;
     private GetAllOrdersFactory factory;
 
     @Before
@@ -23,5 +23,5 @@ public class GetAllOrdersFactoryTest {
         Command cmd = factory.createCommand();
         Assert.assertEquals(db, factory.getDb());
         Assert.assertTrue(cmd instanceof GetAllOrders);
-    }
+    }*/
 }

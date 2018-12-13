@@ -7,6 +7,9 @@ import Controller.Interpreter.Interpreter;
 import View.PrintComplete;
 import View.PrintException;
 
+/**
+ * This class sends command to its execution
+ */
 public class TerminalController{
     private CommandFactoryResolver cfr;
     private Interpreter interpreter;
@@ -21,6 +24,14 @@ public class TerminalController{
         this.complete = complete;
     }
 
+    /**
+     * This method interprets command name from data,
+     * create CommandFactory by command name from resolver,
+     * create Command by CommandFactory,
+     * interprets parametres with their arguments from data and sends their to execute() method of command.
+     * Finally if there are no errors, prints message about successful execution
+     * @param data string of command name with his arguments
+     */
     public void start(String data){
         String commandName = interpreter.getCommandName(data);
 

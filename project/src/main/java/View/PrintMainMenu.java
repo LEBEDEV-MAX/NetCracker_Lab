@@ -1,12 +1,18 @@
 package View;
 
 public class PrintMainMenu {
+    /**
+     * This method prints start menu
+     */
     public void printMenu(){
         System.out.println
                 ("(Write 'help' to get a command-list)\n"+
                         "(Write 'exit' to complete the program)");
     }
 
+    /**
+     * This method prints the available client commands
+     */
     public void printCustomerCommandList(){
         System.out.println
                 ("1) CreateCustomer id=<id>; name=<name>; phone=<phone>; address=<address>; " +
@@ -48,6 +54,6 @@ public class PrintMainMenu {
 
     }
 
-    public void printOrderCommandList(){
-    }
+   /* public void printOrderCommandList(){
+    }*/
 }

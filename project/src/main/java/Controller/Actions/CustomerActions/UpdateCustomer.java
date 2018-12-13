@@ -9,13 +9,29 @@ import Model.CustomerDB;
 
 import java.util.Map;
 
+/**
+ * This class update data of customer by his id
+ */
 public class UpdateCustomer implements Command{
+    /**
+     * @see Model.CustomerDB
+     */
     private CustomerDB db;
 
     public UpdateCustomer(CustomerDB db){
         this.db = db;
     }
 
+    /**
+     * @see Controller.Actions.Command
+     * @param map contains (parameter -> argument)
+     * @throws WrongArgumentException when user wrote wrong id argument
+     * @see Controller.Exceptions.WrongArgumentException
+     * @throws WrongParameterException when user wrote wrong id | name | phone | address parameters
+     * @see Controller.Exceptions.WrongParameterException
+     * @throws CustomerNotFoundException when customer not found in DB by id
+     * @see Controller.Exceptions.CustomerNotFoundException
+     */
     @Override
     public void execute(Map<String, String> map) throws WrongArgumentException, WrongParameterException,
             CustomerNotFoundException {
@@ -35,26 +51,44 @@ public class UpdateCustomer implements Command{
         }
     }
 
+    /**
+     * This method returns id argument of customer from map
+     * @param map contains (parameter -> argument)
+     * @return id of customer
+     * @throws WrongArgumentException when user wrote wrong id argument
+     * @see Controller.Exceptions.WrongArgumentException
+     * @throws WrongParameterException when user wrote wrong id parameter
+     * @see Controller.Exceptions.WrongParameterException
+     */
     private int getID(Map<String, String> map) throws WrongArgumentException, WrongParameterException {
-        if(map.get("id") != null){
+        String id = map.get("id");
+        if(id != null){
             try{
-                return Integer.parseInt(map.get("id"));
+                return Integer.parseInt(id);
             }
             catch (Exception e){
-                throw new WrongArgumentException();
+                throw new WrongArgumentException("id = " + id + " in UpdateCustomer command");
             }
         }
         else{
-            throw new WrongParameterException();
+            throw new WrongParameterException("parameter 'id' not found in UpdateCustomer command");
         }
     }
 
-    public Customer getCustomerByID(int id) throws CustomerNotFoundException {
-        if (db.getCustomer(id) != null) {
-            return db.getCustomer(id);
+    /**
+     * This method get customer by his id from DB
+     * @param id of customer
+     * @return Customer whose you want to get
+     * @throws CustomerNotFoundException when customer not found in DB by id
+     * @see Controller.Exceptions.CustomerNotFoundException
+     */
+    private Customer getCustomerByID(int id) throws CustomerNotFoundException {
+        Customer customer = db.getCustomer(id);
+        if (customer != null) {
+            return customer;
         }
         else{
-            throw new CustomerNotFoundException();
+            throw new CustomerNotFoundException("by id = " + id + " in UpdateCustomer command");
         }
     }
 }

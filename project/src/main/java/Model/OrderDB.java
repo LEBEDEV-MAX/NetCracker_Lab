@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.Exceptions.OrderNotFoundException;
+
 import java.util.ArrayList;
 
 public class OrderDB {
@@ -22,24 +24,26 @@ public class OrderDB {
     }
 
     public Order getOrder(int id){
-        for (Order order : orders){
-            if(order.getOrderID() == id) return order;
+        for(Order order: orders){
+            if(order.getOrderID() == id){
+                return order;
+            }
         }
-        // сообщение о ненайденом клиенте
         return null;
     }
 
-    public void deleteOrder(int id){
+    public void deleteOrder(int id) throws OrderNotFoundException{
         for(int i=0; i < orders.size(); i++){
             if(orders.get(i).getOrderID() == id) {
                 orders.remove(i);
                 return;
             }
         }
-        //сообщение о ненайденом клиенте
+        //if order not found
+        throw new OrderNotFoundException();
     }
 
     public void deleteAllOrders(){
-        orders = null;
+        orders.clear();
     }
 }

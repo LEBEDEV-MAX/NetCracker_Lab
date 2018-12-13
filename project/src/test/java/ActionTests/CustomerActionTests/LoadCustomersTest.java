@@ -4,8 +4,10 @@ import Controller.Actions.CustomerActions.LoadCustomers;
 import Controller.Actions.CustomerActions.SaveCustomers;
 import Controller.Exceptions.WrongArgumentException;
 import Controller.Exceptions.WrongParameterException;
+import Controller.StreamService;
 import Model.Customer;
 import Model.CustomerDB;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,27 +22,31 @@ public class LoadCustomersTest {
     private Customer customer;
     private Customer customer1;
     private File file;
+    private StreamService service;
 
     @Before
     public void beforeTest(){
         customer = new Customer(1, "Igor", "+09876543210", "USA");
-        customer1 = new Customer(1, "Ivan", "+1234567890", "Russia");
+        customer1 = new Customer(1, "Ivan", "+01234567890", "Russia");
         db = new CustomerDB();
-        db.addCustomer(customer);
         db.addCustomer(customer1);
 
         file = new File("Customers.dat");
+        service = new StreamService();
 
         Map<String, String> mapSave = new HashMap<>();
         mapSave.put("file", "Customers.dat");
 
         try{
-            SaveCustomers sc = new SaveCustomers(db);
+            SaveCustomers sc = new SaveCustomers(db, service);
             sc.execute(mapSave);
         }
         catch (Exception e){
             e.printStackTrace();
         }
+
+        db.deleteAllCustomers();
+        db.addCustomer(customer);
     }
 
     @Test
@@ -50,8 +56,7 @@ public class LoadCustomersTest {
         mapLoad.put("dublicatePolicy", "replace");
 
         try{
-            LoadCustomers lc = new LoadCustomers(db);
-            //db.getCustomers().clear();
+            LoadCustomers lc = new LoadCustomers(db, service);
             lc.execute(mapLoad);
 
             Assert.assertEquals(1, db.getCustomers().size());
@@ -65,10 +70,6 @@ public class LoadCustomersTest {
         catch (Exception e){
             e.printStackTrace();
         }
-        finally {
-            if(!file.delete()) System.out.println("file not deleted");
-        }
-
     }
 
     @Test
@@ -78,8 +79,7 @@ public class LoadCustomersTest {
         mapLoad.put("dublicatePolicy", "skip");
 
         try{
-            LoadCustomers lc = new LoadCustomers(db);
-            //db.getCustomers().clear();
+            LoadCustomers lc = new LoadCustomers(db, service);
             lc.execute(mapLoad);
 
             Assert.assertEquals(1, db.getCustomers().size());
@@ -93,49 +93,30 @@ public class LoadCustomersTest {
         catch (Exception e){
             e.printStackTrace();
         }
-        finally {
-            if(!file.delete()) System.out.println("file not deleted");
-        }
     }
 
-    @Test
-    public void testWrongParameterException(){
+    @Test(expected = WrongParameterException.class)
+    public void testWrongParameterException() throws Exception{
         mapLoad = new HashMap<>();
         mapLoad.put("fi le", "Customers.dat");
         mapLoad.put("dublicatePolicy", "a");
 
-        try{
-            LoadCustomers lc = new LoadCustomers(db);
-            lc.execute(mapLoad);
-        }
-        catch (WrongParameterException e){
-            Assert.assertEquals("Wrong Parameter", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            if(!file.delete()) System.out.println("file not deleted");
-        }
+        LoadCustomers lc = new LoadCustomers(db, service);
+        lc.execute(mapLoad);
     }
 
-    @Test
-    public void testWrongArgumentException(){
+    @Test(expected = WrongArgumentException.class)
+    public void testWrongArgumentException() throws Exception{
         mapLoad = new HashMap<>();
         mapLoad.put("file", "Customers.dat");
+        mapLoad.put("dublicatePolicy", "a");
 
-        try{
-            LoadCustomers lc = new LoadCustomers(db);
-            lc.execute(mapLoad);
-        }
-        catch (WrongArgumentException e){
-            Assert.assertEquals("Wrong Argument", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            if(!file.delete()) System.out.println("file not deleted");
-        }
+        LoadCustomers lc = new LoadCustomers(db, service);
+        lc.execute(mapLoad);
+    }
+
+    @After
+    public void afterTest(){
+        if(!file.delete()) System.out.println("file not deleted");
     }
 }

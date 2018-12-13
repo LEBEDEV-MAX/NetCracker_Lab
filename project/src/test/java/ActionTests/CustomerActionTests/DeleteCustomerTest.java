@@ -42,54 +42,30 @@ public class DeleteCustomerTest {
         }
     }
 
-    @Test
-    public void testWrongArgumentException(){
+    @Test(expected = WrongArgumentException.class)
+    public void testWrongArgumentException() throws Exception{
         map = new HashMap<>();
         map.put("id", "a");
 
-        try{
-            DeleteCustomer dc = new DeleteCustomer(db);
-            dc.execute(map);
-        }
-        catch (WrongArgumentException e){
-            Assert.assertEquals("Wrong Argument", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        DeleteCustomer dc = new DeleteCustomer(db);
+        dc.execute(map);
     }
 
-    @Test
-    public void testWrongParameterException(){
+    @Test(expected = WrongParameterException.class)
+    public void testWrongParameterException() throws Exception{
         map = new HashMap<>();
         map.put("i d", "1");
 
-        try{
-            DeleteCustomer dc = new DeleteCustomer(db);
-            dc.execute(map);
-        }
-        catch (WrongParameterException e){
-            Assert.assertEquals("Wrong Parameter", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        DeleteCustomer dc = new DeleteCustomer(db);
+        dc.execute(map);
     }
 
-    @Test
-    public void testCustomerNotFoundException(){
+    @Test(expected = CustomerNotFoundException.class)
+    public void testCustomerNotFoundException() throws Exception{
         map = new HashMap<>();
         map.put("id", "2");
 
-        try{
-            DeleteCustomer dc = new DeleteCustomer(db);
-            dc.execute(map);
-        }
-        catch (CustomerNotFoundException e){
-            Assert.assertEquals("Customer not found", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        DeleteCustomer dc = new DeleteCustomer(db);
+        dc.execute(map);
     }
 }

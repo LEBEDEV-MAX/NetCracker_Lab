@@ -1,4 +1,4 @@
-package View;
+package View.CustomersView;
 
 import Model.Customer;
 
@@ -6,7 +6,11 @@ import java.util.ArrayList;
 
 public class PrintFoundCustomer {
 
-    public void print(ArrayList<Customer> customers){
+    /**
+     * This method prints information about the customer which you wanted to find by name
+     * @param customers ArrayList of customers which were found
+     */
+    public void print(ArrayList<Customer> customers, String name){
         if(customers.size() != 0){
             for(int i=0; i < customers.size(); i++){
                 System.out.println((i+1) + ")");
@@ -17,7 +21,7 @@ public class PrintFoundCustomer {
             }
         }
         else{
-            System.out.println("Customers are not found by name");
+            System.out.println("Customers are not found by name = " + name);
         }
     }
 }

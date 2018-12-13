@@ -6,7 +6,7 @@ import Controller.Exceptions.WrongArgumentException;
 import Controller.Exceptions.WrongParameterException;
 import Model.Customer;
 import Model.CustomerDB;
-import View.PrintCustomer;
+import View.CustomersView.PrintCustomer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,54 +46,30 @@ public class GetCustomerTest {
         }
     }
 
-    @Test
-    public void testWrongArgumentException(){
+    @Test(expected = WrongArgumentException.class)
+    public void testWrongArgumentException() throws Exception{
         map = new HashMap<>();
         map.put("id", "a");
 
-        try{
-            GetCustomer gc = new GetCustomer(db, pc);
-            gc.execute(map);
-        }
-        catch (WrongArgumentException e){
-            Assert.assertEquals("Wrong Argument", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        GetCustomer gc = new GetCustomer(db, pc);
+        gc.execute(map);
     }
 
-    @Test
-    public void testWrongParameterException(){
+    @Test(expected = WrongParameterException.class)
+    public void testWrongParameterException() throws Exception{
         map = new HashMap<>();
         map.put("i d", "1");
 
-        try{
-            GetCustomer gc = new GetCustomer(db, pc);
-            gc.execute(map);
-        }
-        catch (WrongParameterException e){
-            Assert.assertEquals("Wrong Parameter", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        GetCustomer gc = new GetCustomer(db, pc);
+        gc.execute(map);
     }
 
-    @Test
-    public void testCustomerNotFoundException(){
+    @Test(expected = CustomerNotFoundException.class)
+    public void testCustomerNotFoundException() throws Exception{
         map = new HashMap<>();
         map.put("id", "2");
 
-        try{
-            GetCustomer gc = new GetCustomer(db, pc);
-            gc.execute(map);
-        }
-        catch (CustomerNotFoundException e){
-            Assert.assertEquals("Customer not found", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        GetCustomer gc = new GetCustomer(db, pc);
+        gc.execute(map);
     }
 }

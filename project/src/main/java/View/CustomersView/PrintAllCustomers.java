@@ -1,4 +1,4 @@
-package View;
+package View.CustomersView;
 
 import Model.Customer;
 import Model.CustomerDB;
@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class PrintAllCustomers {
 
+    /**
+     * This method prints info about all customers
+     * @param db is DB of customers
+     */
     public void print(CustomerDB db){
         ArrayList<Customer> customers = db.getCustomers();
 

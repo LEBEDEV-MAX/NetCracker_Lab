@@ -1,6 +1,7 @@
 package ActionTests.CustomerActionTests;
 
 import Controller.Actions.CustomerActions.CreateCustomer;
+import Controller.Exceptions.ExistCustomerException;
 import Controller.Exceptions.WrongArgumentException;
 import Controller.Exceptions.WrongParameterException;
 import Model.Customer;
@@ -48,37 +49,35 @@ public class CreateCustomerTest {
         }
     }
 
-    @Test
-    public void testWrongArgumentException(){
+    @Test(expected = WrongArgumentException.class)
+    public void testWrongArgumentException() throws Exception{
         map = new HashMap<>();
         map.put("id", "a");
 
-        try{
-            CreateCustomer create = new CreateCustomer(db);
-            create.execute(map);
-        }
-        catch (WrongArgumentException e){
-            Assert.assertEquals("Wrong Argument", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        CreateCustomer create = new CreateCustomer(db);
+        create.execute(map);
+
     }
 
-    @Test
-    public void testWrongParameterException(){
+    @Test(expected = WrongParameterException.class)
+    public void testWrongParameterException() throws Exception{
         map = new HashMap<>();
-        map.put("i d", "a");
+        map.put("i d", "1");
 
-        try{
-            CreateCustomer create = new CreateCustomer(db);
-            create.execute(map);
-        }
-        catch (WrongParameterException e){
-            Assert.assertEquals("Wrong Parameter", e.getMessage());
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        CreateCustomer create = new CreateCustomer(db);
+        create.execute(map);
+    }
+
+    @Test(expected = ExistCustomerException.class)
+    public void testExistCustomerException() throws Exception{
+        map = new HashMap<>();
+        map.put("id", "1");
+        map.put("name", "Ivan");
+        map.put("phone", "+12345678901");
+        map.put("address", "Russia");
+
+        CreateCustomer create = new CreateCustomer(db);
+        create.execute(map);
+        create.execute(map);
     }
 }

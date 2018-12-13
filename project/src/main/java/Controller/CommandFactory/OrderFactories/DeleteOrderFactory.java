@@ -5,8 +5,8 @@ import Controller.CommandFactory.CommandFactory;
 import Controller.Actions.OrderActions.DeleteOrder;
 import Model.OrderDB;
 
-public class DeleteOrderFactory implements CommandFactory {
-    private OrderDB db;
+public class DeleteOrderFactory/* implements CommandFactory*/ {
+  /*  private OrderDB db;
 
     public DeleteOrderFactory(OrderDB db){
         this.db = db;
@@ -19,5 +19,5 @@ public class DeleteOrderFactory implements CommandFactory {
 
     public OrderDB getDb() {
         return db;
-    }
+    }*/
 }

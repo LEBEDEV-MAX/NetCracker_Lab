@@ -3,7 +3,7 @@ package ActionTests.CustomerActionTests;
 import Controller.Actions.CustomerActions.GetAllCustomers;
 import Model.Customer;
 import Model.CustomerDB;
-import View.PrintAllCustomers;
+import View.CustomersView.PrintAllCustomers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -5,11 +5,21 @@ import java.util.Map;
 
 public class InterpreterImpl implements Interpreter {
 
+    /**
+     * @see Controller.Interpreter.Interpreter
+     * @param data string of command name with his arguments
+     * @return command name
+     */
     @Override
     public String getCommandName(String data){
         return data.split(" ")[0];
     }
 
+    /**
+     * @see Controller.Interpreter.Interpreter
+     * @param data string of command name with his arguments
+     * @return map (parameter -> argument)
+     */
     @Override
     public Map<String, String> interpretArguments(String data){
         Map<String, String> map = new HashMap<String,String>();
@@ -25,6 +35,11 @@ public class InterpreterImpl implements Interpreter {
         return map;
     }
 
+    /**
+     * This method cut out command name from data (for easy search of arguments)
+     * @param data string of command name with his arguments
+     * @return data without command name
+     */
     private String replace(String data){
         String commandName = getCommandName(data);
         return data.replaceAll(commandName, "");

@@ -1,12 +1,11 @@
 import Controller.CommandFactory.CommandFactory;
 import Controller.CommandFactory.CustomerFactories.*;
-import Controller.CommandFactory.OrderFactories.*;
 import Controller.CommandResolver.CommandResolver;
 import Controller.Exceptions.WrongCommandException;
+import Controller.StreamService;
 import Model.CustomerDB;
-import Model.OrderDB;
-import View.PrintAllCustomers;
-import View.PrintCustomer;
+import View.CustomersView.PrintAllCustomers;
+import View.CustomersView.PrintCustomer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +17,7 @@ public class CommandResolverTest {
     private PrintCustomer pc;
     private PrintAllCustomers pac;
     private Map<String, CommandFactory> map;
+    private StreamService service;
 
     @Before
     public void beforeTest(){
@@ -26,6 +26,7 @@ public class CommandResolverTest {
        ////// OrderDB orderDB = new OrderDB();
         pc = new PrintCustomer();
         pac = new PrintAllCustomers();
+        service = new StreamService();
 
         map.put("CreateCustomer", new CreateCustomerFactory(customerDB));
         map.put("DeleteAllCustomers", new DeleteAllCustomerFactory(customerDB));
@@ -33,8 +34,8 @@ public class CommandResolverTest {
         map.put("GetAllCustomers", new GetAllCustomersFactory(customerDB, pac));
         map.put("GetCustomer", new GetCustomerFactory(customerDB, pc));
         map.put("UpdateCustomer", new UpdateCustomerFactory(customerDB));
-        map.put("SaveCustomers", new SaveCustomersFactory(customerDB));
-        map.put("LoadCustomers", new LoadCustomersFactory(customerDB));
+        map.put("SaveCustomers", new SaveCustomersFactory(customerDB, service));
+        map.put("LoadCustomers", new LoadCustomersFactory(customerDB, service));
         //
       /*  map.put("CreateOrder", new CreateOrderFactory(orderDB));
         map.put("DeleteAllOrders", new DeleteAllOrdersFactory(orderDB));
@@ -151,16 +152,12 @@ public class CommandResolverTest {
         }
     }
 
-    @Test
-    public void testWrongCommandException(){
+    @Test(expected = WrongCommandException.class)
+    public void testWrongCommandException() throws Exception{
         String str = "a";
-        try{
-            CommandResolver cr = new CommandResolver(map);
-            cr.resolveCommandFactory(str);
-        }
-        catch (WrongCommandException e){
-            Assert.assertEquals("Wrong Command", e.getMessage());
-        }
+
+        CommandResolver cr = new CommandResolver(map);
+        cr.resolveCommandFactory(str);
     }
 
 /*
